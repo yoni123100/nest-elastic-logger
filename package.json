@@ -1,7 +1,7 @@
 {
   "name": "nest-elastic-logger",
   "version": "1.0.0",
-  "description": "Custom logger with winston under the hood, uses Elasticsearch format to be able to parse them",
+  "description": "Customized logging solution, powered by Winston, adopts the Elasticsearch format for easy parsing of log entries.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
