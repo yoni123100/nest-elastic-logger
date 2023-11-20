@@ -57,7 +57,6 @@ export class AppModule {}
 
 ## Usage
 
-Prints "Hello There" log after 1 second
 `app.controller.ts`
 
 ```ts
