@@ -1,9 +1,8 @@
-import winston, { Logger, createLogger } from 'winston';
 import { ecsFormat } from '@elastic/ecs-winston-format';
-import colorize, { Colors } from 'colorts';
+import { LoggerService, Type } from '@nestjs/common';
+import { Colors, default as color, default as colorize } from 'colorts';
+import winston, { Logger, createLogger } from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
-import color from 'colorts';
-import { LoggerService } from '@nestjs/common';
 
 type LogType = 'INFO' | 'WARN' | 'FETAL' | 'DEBUG' | 'ERROR';
 const customLevels = {
@@ -13,6 +12,7 @@ const customLevels = {
   debug: 3,
   fetal: 4,
 };
+export const BETTER_LOGGER_SETTINGS = Symbol("BETTER_LOGGER_SETTINGS");
 
 export type LimitedDailyRoatateOptions = {
   maxSize: string;
@@ -25,6 +25,20 @@ export type BetterLoggerSettings = {
   removeNewlineFormat?: boolean;
   printFormat?: winston.Logform.Format;
   dailyRotateOptions?: LimitedDailyRoatateOptions;
+};
+
+export type BetterLoggerSettingsFactory = {
+  createLoggerSettings(): Promise<BetterLoggerSettings> | BetterLoggerSettings;
+};
+
+export type BetterLoggerAsyncOptions = {
+  useFactory?: (
+    ...args: any[]
+  ) => Promise<BetterLoggerSettings> | BetterLoggerSettings;
+  useClass?: Type<BetterLoggerSettingsFactory>;
+  useExisting?: Type<BetterLoggerSettingsFactory>;
+  inject?: any[];
+  imports?: any[];
 };
 
 export class BetterLogger implements LoggerService {
